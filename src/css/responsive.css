@@ -1,0 +1,125 @@
+@media (max-width: 1024px) {  
+    body{
+        height: 100%;
+    }
+
+    header{
+        display: flex;
+        gap: 45px;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 36px;
+    }
+
+    header button{
+        padding: 8px 5px;
+    }
+
+    .card{
+        display: flex;
+        padding: 20px 25px;
+        margin-top: 5%;
+    }
+
+    .movies{
+        display: grid;
+        gap: 26px;
+        place-content: center;
+    }
+
+    .movie{
+        display: flex;
+        max-width: 200px;
+        
+    }
+
+    .title div img{
+        width: 40px;
+    }
+
+    .title span{
+        white-space: nowrap;
+    }
+
+    .duration, .year{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info, .title{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+
+@media (max-width: 768px ) {
+    header {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    .movies{
+        display: grid;
+        gap: 26px;
+        grid-template-columns:repeat(2, 230px);
+        place-content: center;
+    }
+    
+    .movie{
+        max-width: 100%;
+    }
+
+    .title span{
+        text-align: start;
+        white-space: nowrap;
+    }
+
+    .info, .title {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+
+@media (max-width: 425px ) {
+    header {
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    
+    .movies{
+        display: grid;
+        gap: 26px;
+        grid-template-columns: 1fr;
+        place-content: center;
+    }
+
+    .title span{
+        text-align: start;
+        white-space: nowrap;
+    }
+
+    .info, .title {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 1440px) {
+    .card{
+        margin-top: 2%;
+    }
+
+    .movies{
+        gap: 26px;
+    }
+}
