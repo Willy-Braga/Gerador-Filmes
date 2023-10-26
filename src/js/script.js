@@ -41,42 +41,9 @@ async function getMoreInfo(id){
 
 }
 
-//Quando clicar no botão de assistir trailer
-
-// async function watch(e){
-//     const movie_id = e.currentTarget.dataset.id
-
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             accept: 'application/json',
-//             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZWVjYzIzMzk4NGU1MjBmZWI1ZjVjNDI2NmE3ODZhYiIsInN1YiI6IjY0ZDI2MjM3OTQ1ZDM2MDEzOTRmMmExYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UrkcEOOnHF6SfwCJHyFFUMSWaXI4__ULwvS-YHhRAVs'
-//         }
-//     };
-
-//     try {
-//         const data = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}/videos?language=pt-BR`, options)
-//         .then(response => response.json());
-
-
-//         const { results } = data
-
-//         const youtubeVideo = results.find(video => video.type === "Trailer");
-
-//         window.open(`https://m.youtube.com/watch?v=${youtubeVideo.key}`)
-
-        
-//     } catch (error) {
-//         console.log(error);
-//     };
-    
-
-// };
-
 //Função criada para alteração do layout no html e adição dos elementos da api
 
 function createMovieLayout({
-    id,
     title,
     stars,
     image,
@@ -124,12 +91,11 @@ function createMovieLayout({
             </div>
         </div>
 
-        <button data-id="${id}" >
-            <a href="https://m.youtube.com/watch?v=${videoUrl}" id="btn-trailer" target="_blank">
+
+        <a href="https://m.youtube.com/watch?v=${videoUrl}" id="btn-trailer" target="_blank">
             <img src="src/assets/icones/play-icone.svg" alt="">
             <span>Assistir Trailer</span>
-            </a>
-        </button>
+        </a>
     </div>
     `
     // para a criação do botão iremos na api para procurar onde ele está hospedado dentro do banco de dados.
@@ -169,6 +135,7 @@ async function start(){
         //pegar informações extras dos filmes
         const info = await getMoreInfo(movie)
 
+        //Abrir o trailer quando clicar no botão
         const videoURL = async (info) => {
             const options = {
                 method: 'GET',
@@ -185,28 +152,7 @@ async function start(){
     
                 const videoUrlPt = dataForTrailer.results.find((video) => video.type === "Trailer")?.key;
 
-                if (!videoUrlPt) {
-                    // Verifica se o filme possui trailer em outro idioma
-                    const options2 = {
-                        method: 'GET',
-                        headers: {
-                        accept: 'application/json',
-                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZWVjYzIzMzk4NGU1MjBmZWI1ZjVjNDI2NmE3ODZhYiIsInN1YiI6IjY0ZDI2MjM3OTQ1ZDM2MDEzOTRmMmExYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UrkcEOOnHF6SfwCJHyFFUMSWaXI4__ULwvS-YHhRAVs'
-                        }
-                    };
-                
-                    const dataForTrailer2 = await fetch(`https://api.themoviedb.org/3/movie/${info.id}/videos?language=en-US`, options2)
-                                                    .then(response => response.json())
-                                                    .then(results => results);
-                
-                    const videoUrlEn = dataForTrailer2.results.find((video) => video.type === "Trailer")?.key;
-                
-                    // Retornar a URL do trailer em inglês
-                    return videoUrlEn;
-                } else {
-                    // Retornar a URL do trailer em português
-                    return videoUrlPt;
-                }
+                return videoUrlPt
             } catch (error) {
                 console.error(error);
             };
@@ -214,7 +160,6 @@ async function start(){
 
         //organizar os dado para ...
         const props = {
-            id: info.id,
             title: info.title,
             stars: Number(info.vote_average).toFixed(1),
             image: info.poster_path,
