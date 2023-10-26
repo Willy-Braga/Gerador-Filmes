@@ -18,7 +18,7 @@
     .card{
         display: flex;
         padding: 20px 25px;
-        margin-top: 5%;
+        margin-top: 50px;
     }
 
     .movies{
@@ -116,7 +116,7 @@
 
 @media (min-width: 1440px) {
     .card{
-        margin-top: 2%;
+        margin-top: 40px;
     }
 
     .movies{
