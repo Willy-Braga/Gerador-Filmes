@@ -22,14 +22,14 @@ O projeto é um exemplo de como integrar uma API a um site ou aplicativo.
 Que você aprenda a integrar APIs com seus projetos.<br>
 Que você aproveite este projeto como um exemplo para seus próprios projetos.
 
-Baixe o código do projeto aqui: https://github.com/Willy-Braga/Pokedex. <br><br>
+Baixe o código do projeto aqui: https://github.com/Willy-Braga/Gerador-Filmes. <br><br>
 Experimente o projeto em seu navegador.
 
-<img src="https://img.shields.io/github/stars/Willy-Braga/?style=social">
-<img src="https://img.shields.io/github/issues-pr-raw/Willy-Braga/?style=social">
-<img src="https://img.shields.io/github/issues-closed/willy-braga/?style=social">
+<img src="https://img.shields.io/github/stars/Willy-Braga/Gerador-Filmes?style=social">
+<img src="https://img.shields.io/github/issues-pr-raw/Willy-Braga/Gerador-Filmes?style=social">
+<img src="https://img.shields.io/github/issues-closed/willy-braga/Gerador-Filmes?style=social">
 
-## [Link do Projeto](https://willy-braga.github.io/)
+## [Link do Projeto](https://willy-braga.github.io/Gerador-Filmes/)
 
 ### Linguagens e Ferramentas
 
@@ -43,12 +43,12 @@ Experimente o projeto em seu navegador.
 
 ### Desktop
 
-<a href="https://willy-braga.github.io/" target='_blank'>
+<a href="https://willy-braga.github.io/Gerador-Filmes/" target='_blank'>
 <img src="src/designs/desktop-design.png"/>
 </a>
 
 ### Mobile
-<a href="https://willy-braga.github.io/" target='_blank'>
+<a href="https://willy-braga.github.io/Gerador-Filmes/" target='_blank'>
 <img src="src/designs/mobile-design.png" />
 </a>
 
