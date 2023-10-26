@@ -62,7 +62,7 @@ async function watch(e){
 
         const youtubeVideo = results.find(video => video.type === "Trailer");
 
-        window.open(`https://m.youtube.com/watch?v=${youtubeVideo.key}`, 'blank')
+        window.open(`https://m.youtube.com/watch?v=${youtubeVideo.key}`)
 
         
     } catch (error) {
