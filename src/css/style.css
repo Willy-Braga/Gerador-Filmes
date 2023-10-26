@@ -132,12 +132,13 @@ header button{
     line-height: 20px; 
 }
 
-.movie button{
+.movie a{
     display: flex;
     width: 100%;
     padding: 8px 16px;
     justify-content: center;
     align-items: center;
+    font-weight: 500;
     gap: 8px;
     border-radius: 4px;
     background: var(--cores-cinza, #2B2B37);
