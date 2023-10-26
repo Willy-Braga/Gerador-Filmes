@@ -183,9 +183,30 @@ async function start(){
                                                 .then(response => response.json())
                                                 .then(results => results);
     
-                const videoUrl = dataForTrailer.results.find((video) => video.type === "Trailer")?.key;
+                const videoUrlPt = dataForTrailer.results.find((video) => video.type === "Trailer")?.key;
 
-                return videoUrl || "O filme não tem trailer";
+                if (!videoUrlPt) {
+                    // Verifica se o filme possui trailer em outro idioma
+                    const options2 = {
+                        method: 'GET',
+                        headers: {
+                        accept: 'application/json',
+                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZWVjYzIzMzk4NGU1MjBmZWI1ZjVjNDI2NmE3ODZhYiIsInN1YiI6IjY0ZDI2MjM3OTQ1ZDM2MDEzOTRmMmExYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UrkcEOOnHF6SfwCJHyFFUMSWaXI4__ULwvS-YHhRAVs'
+                        }
+                    };
+                
+                    const dataForTrailer2 = await fetch(`https://api.themoviedb.org/3/movie/${info.id}/videos?language=en-US`, options2)
+                                                    .then(response => response.json())
+                                                    .then(results => results);
+                
+                    const videoUrlEn = dataForTrailer2.results.find((video) => video.type === "Trailer")?.key;
+                
+                    // Retornar a URL do trailer em inglês
+                    return videoUrlEn;
+                } else {
+                    // Retornar a URL do trailer em português
+                    return videoUrlPt;
+                }
             } catch (error) {
                 console.error(error);
             };
