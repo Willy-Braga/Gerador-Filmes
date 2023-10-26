@@ -32,8 +32,7 @@ async function getMoreInfo(id){
     try {
         const data = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=pt-BR`, options)
         .then(response => response.json())
-        
-        console.log(data)
+    
         return data
     } catch (error) {
         console.log(error)
@@ -45,6 +44,7 @@ async function getMoreInfo(id){
 
 async function watch(e){
     const movie_id = e.currentTarget.dataset.id
+
     const options = {
         method: 'GET',
         headers: {
@@ -62,9 +62,9 @@ async function watch(e){
 
         const youtubeVideo = results.find(video => video.type === "Trailer");
 
-        window.open(`https://www.youtube.com/watch?v=${youtubeVideo.key}`, 'blank')
+        window.open(`https://m.youtube.com/watch?v=${youtubeVideo.key}`, 'blank')
 
-
+        
     } catch (error) {
         console.log(error);
     };
