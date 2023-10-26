@@ -31,46 +31,47 @@ async function getMoreInfo(id){
 
     try {
         const data = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=pt-BR`, options)
-        .then(response => response.json())
+                            .then(response => response.json())
     
         return data
     } catch (error) {
         console.log(error)
     }
 
+
 }
 
 //Quando clicar no botão de assistir trailer
 
-async function watch(e){
-    const movie_id = e.currentTarget.dataset.id
+// async function watch(e){
+//     const movie_id = e.currentTarget.dataset.id
 
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZWVjYzIzMzk4NGU1MjBmZWI1ZjVjNDI2NmE3ODZhYiIsInN1YiI6IjY0ZDI2MjM3OTQ1ZDM2MDEzOTRmMmExYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UrkcEOOnHF6SfwCJHyFFUMSWaXI4__ULwvS-YHhRAVs'
-        }
-    };
+//     const options = {
+//         method: 'GET',
+//         headers: {
+//             accept: 'application/json',
+//             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZWVjYzIzMzk4NGU1MjBmZWI1ZjVjNDI2NmE3ODZhYiIsInN1YiI6IjY0ZDI2MjM3OTQ1ZDM2MDEzOTRmMmExYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UrkcEOOnHF6SfwCJHyFFUMSWaXI4__ULwvS-YHhRAVs'
+//         }
+//     };
 
-    try {
-        const data = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}/videos?language=pt-BR`, options)
-        .then(response => response.json());
+//     try {
+//         const data = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}/videos?language=pt-BR`, options)
+//         .then(response => response.json());
 
 
-        const { results } = data
+//         const { results } = data
 
-        const youtubeVideo = results.find(video => video.type === "Trailer");
+//         const youtubeVideo = results.find(video => video.type === "Trailer");
 
-        window.open(`https://m.youtube.com/watch?v=${youtubeVideo.key}`)
+//         window.open(`https://m.youtube.com/watch?v=${youtubeVideo.key}`)
 
         
-    } catch (error) {
-        console.log(error);
-    };
+//     } catch (error) {
+//         console.log(error);
+//     };
     
 
-};
+// };
 
 //Função criada para alteração do layout no html e adição dos elementos da api
 
@@ -82,8 +83,8 @@ function createMovieLayout({
     time,
     year,
     description,
-    genres
-
+    genres,
+    videoUrl
 }) {
     return `
     <div class="movie">
@@ -123,9 +124,11 @@ function createMovieLayout({
             </div>
         </div>
 
-        <button onClick="watch(event)" data-id="${id}">
+        <button data-id="${id}" >
+            <a href="https://m.youtube.com/watch?v=${videoUrl}" id="btn-trailer" target="_blank">
             <img src="src/assets/icones/play-icone.svg" alt="">
             <span>Assistir Trailer</span>
+            </a>
         </button>
     </div>
     `
@@ -163,8 +166,31 @@ async function start(){
     //pegar randomicamente 3 filmes para sugestão
     const bestVideos = selectVideos(results).map(async movie => {
 
-           //pegar informações extras dos 3 filmes
+        //pegar informações extras dos filmes
         const info = await getMoreInfo(movie)
+
+        const videoURL = async (info) => {
+            const options = {
+                method: 'GET',
+                headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZWVjYzIzMzk4NGU1MjBmZWI1ZjVjNDI2NmE3ODZhYiIsInN1YiI6IjY0ZDI2MjM3OTQ1ZDM2MDEzOTRmMmExYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UrkcEOOnHF6SfwCJHyFFUMSWaXI4__ULwvS-YHhRAVs'
+                }
+            };
+
+            try {
+                const dataForTrailer = await fetch(`https://api.themoviedb.org/3/movie/${info.id}/videos?language=pt-BR`, options)
+                                                .then(response => response.json())
+                                                .then(results => results);
+    
+                const videoUrl = dataForTrailer.results.find((video) => video.type === "Trailer")?.key;
+
+                return videoUrl || "O filme não tem trailer";
+            } catch (error) {
+                console.error(error);
+            };
+        };
+
         //organizar os dado para ...
         const props = {
             id: info.id,
@@ -174,7 +200,8 @@ async function start(){
             time: minutesToHoursMinutesAndSeconds(info.runtime),
             year: info.release_date.slice(0, 4),
             description: info.overview,
-            genres: info.genres.map((genresSlot) => genresSlot.name)
+            genres: info.genres.map((genresSlot) => genresSlot.name),
+            videoUrl: await videoURL(info)
         }
 
         return createMovieLayout(props)
