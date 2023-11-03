@@ -15,7 +15,7 @@ Os dados foram tratados com JavaScript para receber os seguintes valores:
 
 ### Interessante:
 
-O projeto é uma lista de Pokémon, com informações como gif, nome, número, tipo e descrição.
+O projeto é uma lista de filmes, com informações como imagem do filme, nome, estrelas, gênero e descrição.
 A lista é atualizada em tempo real conforme os dados são recebidos da API.
 O projeto é um exemplo de como integrar uma API a um site ou aplicativo.
 <br><br>
